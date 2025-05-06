@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Крипто-цены</title>
     <style>
         * {
             margin: 0;
@@ -36,24 +36,50 @@
         .btn {
             border: 0;
             border-radius: 5px;
-            margin-top: 50px;
-            height: 60px;
-            width: 200px;
-            font-style: 20px;
+            margin-top: 20px; /* Уменьшил отступ */
+            height: 40px; /* Уменьшил высоту */
+            width: 150px; /* Уменьшил ширину */
+            font-style: 16px; /* Уменьшил размер шрифта */
             font-weight: 500;
             cursor: pointer;
             color: var(--tg-theme-button-text-color);
             background: var(--tg-theme-button-color);
         }
-        
+
+        input[type="text"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 200px;
+            margin-bottom: 10px; /* Добавил отступ */
+        }
+
+        p {
+            margin-top: 10px; /* Добавил отступ для цены */
+        }
+
+        .error {
+            color: red;
+        }
     </style>
 </head>
 <body>
     <div class="Main">
-        <h1>Тестовое приложение</h1>
+        <h1>Получение цены криптовалюты</h1>
         <img src="{{ url_for('static', filename='bot.png') }}" alt="123">
-        <p></p>
-        <button class="btn">Кнопка</button>
+
+        <form method="post">
+            <input type="text" name="pair" placeholder="Введите торговую пару (например, BTCUSDT)">
+            <button type="submit" class="btn">Получить цену</button>
+        </form>
+
+        {% if price %}
+            <p>Цена {{ request.form['pair'].upper() }}: {{ price }}</p>
+        {% endif %}
+
+        {% if error_message %}
+            <p class="error">{{ error_message }}</p>
+        {% endif %}
     </div>
 
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
